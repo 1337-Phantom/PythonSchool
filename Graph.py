@@ -1,3 +1,6 @@
+import string
+import random
+
 class Graph:
   def __init__(self, knoten = [], kanten=[]):
     self.knoten = knoten
@@ -40,13 +43,35 @@ def mooreAlgorythmAll(nameStartKnoten, graph: Graph):
       for nachbar in graph.getAlleNachbarn(knotenName):
         if not nachbar in ergebnis.keys():
           toCheck.append(nachbar)
-          ergebnis[nachbar] = ergebnis[knotenName] + knotenName
+          ergebnis[nachbar] = ergebnis[knotenName] + knotenName + " "
+    for e in ergebnis.keys():
+      ergebnis[e] = ergebnis[e].split()
     return ergebnis
 
 def mooreAlgorythm(nameStartKnoten, nameZielKnoten, graph:Graph):
   all = mooreAlgorythmAll(nameStartKnoten, graph)
   return all[nameZielKnoten]
 
+def randomGraph(length:int):
+  alphabet = list(string.ascii_lowercase)
+  g = Graph()
+  for i in range(length):
+    g.addKnoten(alphabet[i])
+  
+  for knoten in g.getAlleKnoten():
+    for evtlNachbar in g.getAlleKnoten():
+      if random.randint(0, 1) == 1:
+        g.addKante(knoten, evtlNachbar)
+  return g
+  
+def printGraph(graph:Graph):
+  for knoten in graph.getAlleKnoten():
+    print(knoten, graph.getAlleNachbarn(knoten))
+
+
+printGraph(randomGraph(5))
+
+randomGraph(5)
   
   
 
