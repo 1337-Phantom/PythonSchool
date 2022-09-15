@@ -31,18 +31,21 @@ class Graph:
         nachbarn.append(kante[1])
     return nachbarn
 
-def mooreAlgorythm(nameStartKnoten, graph: Graph):
+def mooreAlgorythmAll(nameStartKnoten, graph: Graph):
   if graph.existiertKnoten(nameStartKnoten):
-    ergebnis = {nameStartKnoten:0}
+    ergebnis = {nameStartKnoten:""}
     toCheck = [nameStartKnoten]
     while len(toCheck) != 0:
       knotenName = toCheck.pop(0)
-      print(knotenName, graph.getAlleNachbarn(knotenName))
       for nachbar in graph.getAlleNachbarn(knotenName):
         if not nachbar in ergebnis.keys():
           toCheck.append(nachbar)
-          ergebnis[nachbar] = ergebnis[knotenName] + 1
+          ergebnis[nachbar] = ergebnis[knotenName] + knotenName
     return ergebnis
+
+def mooreAlgorythm(nameStartKnoten, nameZielKnoten, graph:Graph):
+  all = mooreAlgorythmAll(nameStartKnoten, graph)
+  return all[nameZielKnoten]
 
   
   
@@ -98,4 +101,5 @@ graph1.addKante("G", "D")
 graph1.addKante("H", "G")
 graph1.addKante("H", "F")
 
-print("Moore", mooreAlgorythm("A", graph1))
+print("MooreAll", mooreAlgorythmAll("A", graph1))
+print("Moore", mooreAlgorythm("A", "B", graph1))
