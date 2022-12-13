@@ -1,0 +1,44 @@
+def encrypt(Text: str, key: int):
+    # qutotient = länge des textes + key - 1 / key
+    quotient = int((len(Text) + key-1)/key)
+    # leere tabelle
+    tabelle = []
+    pos = 0
+    # für die länge des textes
+    for x in range(key):
+        liste = []
+        # für die länge des quotienten
+        for y in range(quotient):
+            if y*key + x < len(Text):
+                liste.append(Text[pos])
+                pos += 1
+            else:
+                liste.append('#')
+        tabelle.append(liste)
+    print(tabelle)
+
+    chiffre = ""
+
+    for x in range(len(tabelle[x])):
+        for y in range(len(tabelle)):
+            if tabelle[y][x] != '#':
+                chiffre = chiffre + tabelle[y][x]
+    return chiffre
+
+key = 4
+text = encrypt("Hallo", key)
+print(text)
+
+def decrypt(Text: str, key: int):
+    clear_text = ""
+    for offset in range(key):
+        pos = offset
+        while pos < len(Text):
+            clear_text += Text[pos]
+            pos += key
+    return clear_text
+
+print(decrypt(text, key))
+        
+        
+
